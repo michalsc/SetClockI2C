@@ -13,4 +13,4 @@ add_executable(SetClockI2C
 set_target_properties(SetClockI2C PROPERTIES LINKER_LANGUAGE C)
 target_link_libraries(SetClockI2C i2c common)
 
-install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/SetClockI2C DESTINATION ./I2C/)
+install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/SetClockI2C DESTINATION I2C/)
