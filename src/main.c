@@ -8,11 +8,11 @@
 #include <proto/dos.h>
 #include <proto/i2c.h>
 #include <proto/utility.h>
-#include <common/debug.h>
 
 #include <stdlib.h>
 
 int main(int);
+#define D(x) /* x */
 
 /* Startup code including workbench message support */
 int _start()
@@ -167,7 +167,7 @@ int main(int wb)
             buf[7] = dec2bcd(datetime.year);
 
             status = SendI2C(0xd0, 8, buf);
-            bug("SendI2C returned status %06x\n", status);
+            D(bug("SendI2C returned status %06x\n", status));
         }
         else
         {
@@ -178,11 +178,11 @@ int main(int wb)
             // Reset address register of RTC module
             buf[0] = 0;
             status = SendI2C(0xd0, 1, buf);
-            bug("SendI2C returned status %06x\n", status);
+            D(bug("SendI2C returned status %06x\n", status));
 
             // Get time and date
             status = ReceiveI2C(0xd0, 7, buf);
-            bug("ReceiveI2C returned status %06x\n", status);
+            D(bug("ReceiveI2C returned status %06x\n", status));
 
             // Decode minutes
             datetime.sec = bcd2dec(buf[0]);
@@ -214,7 +214,7 @@ int main(int wb)
                 datetime.year += 100;
 
             Printf("RTC Date: %ld-%ld-%ld %02ld:%02ld:%02ld\n", (int)datetime.year, (int)datetime.month, (int)datetime.mday, (int)datetime.hour, (int)datetime.min, (int)datetime.sec);
-            bug("RTC Date: %d-%d-%d %02d:%02d:%02d\n", (int)datetime.year, (int)datetime.month, (int)datetime.mday, (int)datetime.hour, (int)datetime.min, (int)datetime.sec);
+            D(bug("RTC Date: %d-%d-%d %02d:%02d:%02d\n", (int)datetime.year, (int)datetime.month, (int)datetime.mday, (int)datetime.hour, (int)datetime.min, (int)datetime.sec));
 
             if (load && CheckDate(&datetime))
             {
